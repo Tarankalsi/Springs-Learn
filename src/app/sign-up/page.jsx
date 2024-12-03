@@ -14,6 +14,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+import dynamic from 'next/dynamic';
+
+const LottieNoSSR = dynamic(() => import('react-lottie'), { ssr: false });
 const {
   EMAIL_REQUIRED,
   PASSWORD_REQUIRED,
@@ -32,6 +35,15 @@ function SignUpScreen() {
   const [isSigning, setIsSigning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [defaultEmail, setDefaultEmail] = useState("");
+  const [isClient, setIsClient] = useState(false);
+
+useEffect(() => {
+  setIsClient(true);
+}, []);
+
+if (!isClient) {
+  return null;  // Or a loading spinner
+}
 
   const {
     register,
@@ -143,7 +155,7 @@ function SignUpScreen() {
       >
         <div className="flex flex-col px-auto py-auto my-auto overflow-hidden">
           <div className="flex">
-            <Lottie options={lottieImage?.signUpImage} width={400} />
+          <LottieNoSSR options={lottieImage?.signUpImage} width={400} />
             <div className="md:hidden block absolute inset-0 bg-gradient-to-tr from-black-60 via-black-60/70 to-transparent pointer-events-none"></div>
           </div>
           {/* <div className="flex flex-col">

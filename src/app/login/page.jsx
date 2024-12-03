@@ -14,9 +14,13 @@ import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { toast } from "react-hot-toast";
 // import { user } from "next/navigation";
 import { useRouter } from "next/navigation";
+import dynamic from 'next/dynamic';
+
+const LottieNoSSR = dynamic(() => import('react-lottie'), { ssr: false });
 
 const { EMAIL_REQUIRED, PASSWORD_REQUIRED, INVALID_EMAIL, INVALID_PASSWORD } =
   errorMessagesConstants;
+  
 
 function Login() {
   const router = useRouter();
@@ -27,7 +31,16 @@ function Login() {
   const [isSigning, setIsSigning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [defaultEmail, setDefaultEmail] = useState("");
+  const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  if (!isClient) {
+    return null;  // Or a loading spinner
+  }
+  
   const {
     register,
     handleSubmit,
@@ -279,7 +292,7 @@ function Login() {
       >
         <div className="flex flex-col px-auto py-auto my-auto overflow-hidden">
           <div className="flex">
-            <Lottie options={lottieImage?.loginImage} width={400} />
+          <LottieNoSSR options={lottieImage?.signUpImage} width={400} />
             <div className="md:hidden block absolute inset-0 bg-gradient-to-tr from-black-60 via-black-60/70 to-transparent pointer-events-none"></div>
           </div>
           {/* <div className="flex flex-col">
