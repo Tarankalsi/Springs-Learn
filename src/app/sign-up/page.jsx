@@ -47,12 +47,16 @@ function SignUpScreen() {
   };
 
   useEffect(() => {
-    updateComponentHeight();
-    window.addEventListener("resize", updateComponentHeight);
-    return () => {
-      window.removeEventListener("resize", updateComponentHeight);
-    };
+
+    if (typeof window !== "undefined") {
+      updateComponentHeight();
+      window.addEventListener("resize", updateComponentHeight);
+      return () => {
+        window.removeEventListener("resize", updateComponentHeight);
+      };
+    }
   }, []);
+  
 
   const handleLogin = async (data) => {
     setloader(true);
