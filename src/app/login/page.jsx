@@ -42,8 +42,8 @@ function Login() {
   };
 
   useEffect(() => {
-
     if (typeof window !== "undefined") {
+   
       updateComponentHeight();
       window.addEventListener("resize", updateComponentHeight);
       return () => {
